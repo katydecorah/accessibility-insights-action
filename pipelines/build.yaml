@@ -45,7 +45,7 @@ jobs:
             displayName: Publish code coverage to codecov
 
     - job: 'SDT'
-      condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+      condition: succeeded()
       pool:
           vmImage: $(windowsImage)
           demands: npm
@@ -71,27 +71,6 @@ jobs:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@2
             displayName: 'Publish CodeAnalysisLogs Artifact for Scans tab UI'
             condition: succeededOrFailed()
-
-          - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
-            displayName: 'TSA Upload'
-            inputs:
-                tsaVersion: TsaV2
-                codebase: NewOrUpdate
-                codeBaseName: '$(TSACodebaseName)'
-                notificationAlias: '$(notificationAlias)'
-                codeBaseAdmins: '$(codeBaseAdmins)'
-                instanceUrlForTsaV2: $(instanceUrlForTsaV2)
-                projectNameMSENG: $(projectNameMSENG)
-                areaPath: '$(areaPath)'
-                iterationPath: '$(iterationPath)'
-                uploadAPIScan: false
-                uploadBinSkim: false
-                uploadFortifySCA: false
-                uploadFxCop: false
-                uploadModernCop: false
-                uploadPREfast: false
-                uploadRoslyn: false
-                uploadTSLint: false
 
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@1
             displayName: 'Break build on CredScan violations'
