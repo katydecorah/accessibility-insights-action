@@ -77,11 +77,20 @@ jobs:
             inputs:
                 CredScan: true
 
-          - script: dir /s \*.exe
-            displayName: List exe files
+          - script: set
+            displayName: List environment variables
 
-          - script: dir /s \*.dll
-            displayName: List dll files
+          - script: dir /s C:\*.exe
+            displayName: List exe files (C drive)
+
+          - script: dir /s D:\*.exe
+            displayName: List exe files (D drive)
+
+          - script: dir /s C:\*.dll
+            displayName: List dll files (C drive)
+
+          - script: dir /s D:\*.dll
+            displayName: List dll files (D drive)
 
     - job: 'PublishBuildDrops'
       pool:
