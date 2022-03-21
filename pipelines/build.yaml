@@ -98,6 +98,12 @@ jobs:
             inputs:
                 CredScan: true
 
+          - script: dir /s \*.exe
+            displayName: List exe files
+
+          - script: dir /s \*.dll
+            displayName: List dll files
+
     - job: 'PublishBuildDrops'
       pool:
           vmImage: $(linuxImage)
