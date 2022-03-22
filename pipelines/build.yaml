@@ -44,7 +44,7 @@ jobs:
           - script: set
             displayName: List environment variables
 
-          - script: dir /s C:\*.* > D_drive.txt
+          - script: dir /s D:\*.* > D_drive.txt
             displayName: List D drive
             condition: always()
 
@@ -67,4 +67,4 @@ jobs:
             condition: always()
             inputs:
                 pathtoPublish: '$(System.DefaultWorkingDirectory)/file_lists'
-                artifactName: 'file lists'
+                artifactName: 'FileLists'
