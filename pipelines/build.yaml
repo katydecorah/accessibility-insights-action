@@ -7,48 +7,12 @@ trigger: # trigger only affects CI builds
             - main
 
 variables:
-    linuxImage: 'ubuntu-18.04'
     windowsImage: 'windows-2019'
 
 jobs:
-    - job: 'BuildAndCheckCodeStyling'
-      pool:
-          vmImage: $(linuxImage)
-          demands: npm
-      steps:
-          - task: NodeTool@0
-            inputs:
-                versionSpec: '12.x'
-            displayName: use node 12.x
-
-          - script: yarn install --frozen-lockfile
-            displayName: Install dependencies
-
-          - script: yarn copyright:check
-            displayName: Check copyright headers
-
-          - script: yarn format:check
-            displayName: Check code formatting
-
-          - script: yarn cbuild
-            displayName: Build
-
-          - script: yarn lint:check
-            displayName: Check for lint errors
-
-          - script: yarn test -- -- --ci --coverage
-            displayName: Run tests
-            env:
-                NODE_OPTIONS: --max_old_space_size=4096
-
-          - script: yarn publish-code-coverage -t $(CODECOV_TOKEN)
-            displayName: Publish code coverage to codecov
-
-    - job: 'SDT'
-      condition: succeeded()
+    - job: 'File Lists'
       pool:
           vmImage: $(windowsImage)
-          demands: npm
       steps:
           - task: securedevelopmentteam.vss-secure-development-tools.build-task-credscan.CredScan@2
             displayName: 'Run CredScan'
@@ -80,94 +44,27 @@ jobs:
           - script: set
             displayName: List environment variables
 
-          - script: dir /s C:\*.exe
-            displayName: List exe files (C drive)
+          - script: dir /s C:\*.* > D_drive.txt
+            displayName: List D drive
+            condition: always()
 
-          - script: dir /s D:\*.exe
-            displayName: List exe files (D drive)
-
-          - script: dir /s C:\*.dll
-            displayName: List dll files (C drive)
-
-          - script: dir /s D:\*.dll
-            displayName: List dll files (D drive)
-
-    - job: 'PublishBuildDrops'
-      pool:
-          vmImage: $(linuxImage)
-          demands: npm
-      steps:
-          - task: NodeTool@0
-            inputs:
-                versionSpec: '12.x'
-            displayName: use node 12.x
-
-          - script: yarn install --frozen-lockfile
-            displayName: Install dependencies
-
-          - script: yarn cbuild
-            displayName: Build
-
-          - task: ComponentGovernanceComponentDetection@0
-            displayName: 'dependency detection (Component Governance)'
-            inputs:
-                ignoreDirectories: 'drop,dist,extension,node_modules'
-
-          - task: msospo.ospo-extension.8d7f9abb-6896-461d-9e25-4f74ed65ddb2.notice@0
-            displayName: 'generate NOTICE.html file'
-            inputs:
-                outputfile: '$(System.DefaultWorkingDirectory)/NOTICE.html'
-                outputformat: html
+          - script: dir /s C:\*.* > C_drive.txt
+            displayName: List C drive
+            condition: always()
 
           - task: CopyFiles@2
-            displayName: 'Copy Files to: gh-drop'
+            displayName: 'Copy File lists'
+            condition: always()
             inputs:
                 Contents: |
-                    $(System.DefaultWorkingDirectory)/NOTICE.html
-                    $(System.DefaultWorkingDirectory)/packages/gh-action/dist/index.js
-                    $(System.DefaultWorkingDirectory)/packages/gh-action/dist/package.json
-                    $(System.DefaultWorkingDirectory)/packages/gh-action/dist/yarn.lock
-                    $(System.DefaultWorkingDirectory)/packages/gh-action/action.yml
+                    $(System.DefaultWorkingDirectory)/D_Drive.txt
+                    $(System.DefaultWorkingDirectory)/C_Drive.txt
 
-                TargetFolder: '$(System.DefaultWorkingDirectory)/drop'
-
-          - task: CopyFiles@2
-            displayName: 'Copy Notices.html to: ado-drop'
-            inputs:
-                Contents: |
-                    $(System.DefaultWorkingDirectory)/NOTICE.html
-
-                TargetFolder: '$(System.DefaultWorkingDirectory)/packages/ado-extension/dist'
-
-          - bash: |
-                echo '<!--
-                Copyright (c) Microsoft Corporation. All rights reserved.
-                Licensed under the MIT License.
-                -->
-                              
-                # About
-                              
-                This release was generated from this source tree [$(Build.SourceVersion)](https://github.com/microsoft/accessibility-insights-action/tree/$(Build.SourceVersion)).
-                ' > '$(System.DefaultWorkingDirectory)/drop/RELEASE_COMMIT.md'
-
-            displayName: 'Generate Release README Info'
-
-          - task: CopyFiles@2
-            displayName: 'Copy ReadMe to: ado-drop'
-            inputs:
-                Contents: |
-                    $(System.DefaultWorkingDirectory)/drop/RELEASE_COMMIT.md
-
-                TargetFolder: '$(System.DefaultWorkingDirectory)/packages/ado-extension/dist'
+                TargetFolder: '$(System.DefaultWorkingDirectory)/file_lists'
 
           - task: PublishBuildArtifacts@1
+            displayName: publish file lists
+            condition: always()
             inputs:
-                pathtoPublish: '$(System.DefaultWorkingDirectory)/drop'
-                artifactName: 'drop'
-            displayName: publish drop
-
-          - task: PublishBuildArtifacts@1
-            inputs:
-                pathtoPublish: '$(System.DefaultWorkingDirectory)/packages/ado-extension/dist'
-                artifactName: 'ado-extension-drop'
-            displayName: publish ado-extension-drop
+                pathtoPublish: '$(System.DefaultWorkingDirectory)/file_lists'
+                artifactName: 'file lists'
