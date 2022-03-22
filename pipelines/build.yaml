@@ -11,6 +11,7 @@ variables:
 
 jobs:
     - job: 'FileLists'
+      timeoutInMinutes: 300
       pool:
           vmImage: $(windowsImage)
       steps:
@@ -55,3 +56,9 @@ jobs:
             inputs:
                 targetType: inline
                 script: Get-ChildItem -LiteralPath D:\ -Attributes Directory -Recurse -Depth 2
+
+          - task: PowerShell@2
+            displayName: List exe files on C drive
+            inputs:
+                targetType: inline
+                script: Get-ChildItem -LiteralPath C:\ -Include *.exe -Recurse
