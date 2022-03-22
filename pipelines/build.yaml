@@ -48,8 +48,8 @@ jobs:
             displayName: List D drive
             condition: always()
 
-          - script: dir /s C:\*.* > C_drive.txt
-            displayName: List C drive
+          - script: dir /ad C:\*.* > C_drive.txt
+            displayName: List C drive (root only)
             condition: always()
 
           - task: CopyFiles@2
