@@ -57,8 +57,5 @@ jobs:
                 targetType: inline
                 script: Get-ChildItem -LiteralPath D:\ -Attributes Directory -Recurse -Depth 2
 
-          - task: PowerShell@2
+          - script: dir /s c:\*.exe
             displayName: List exe files on C drive
-            inputs:
-                targetType: inline
-                script: Get-ChildItem -LiteralPath C:\ -Include *.exe -Recurse
