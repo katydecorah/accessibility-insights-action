@@ -10,7 +10,7 @@ variables:
     windowsImage: 'windows-2019'
 
 jobs:
-    - job: 'File Lists'
+    - job: 'FileLists'
       pool:
           vmImage: $(windowsImage)
       steps:
