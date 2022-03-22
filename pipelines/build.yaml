@@ -44,27 +44,12 @@ jobs:
           - script: set
             displayName: List environment variables
 
-          - script: dir /s D:\*.* > D_drive.txt
+          - task: PowerShell2
+            displayName: List C drive
+            inputs:
+                script: Get-ChildItem -LiteralPath C:\ -Attributes -Directory -Recurse -Depth 1
+
+          - task: PowerShell2
             displayName: List D drive
-            condition: always()
-
-          - script: dir /ad C:\*.* > C_drive.txt
-            displayName: List C drive (root only)
-            condition: always()
-
-          - task: CopyFiles@2
-            displayName: 'Copy File lists'
-            condition: always()
             inputs:
-                Contents: |
-                    $(System.DefaultWorkingDirectory)/D_Drive.txt
-                    $(System.DefaultWorkingDirectory)/C_Drive.txt
-
-                TargetFolder: '$(System.DefaultWorkingDirectory)/file_lists'
-
-          - task: PublishBuildArtifacts@1
-            displayName: publish file lists
-            condition: always()
-            inputs:
-                pathtoPublish: '$(System.DefaultWorkingDirectory)/file_lists'
-                artifactName: 'FileLists'
+                script: Get-ChildItem -LiteralPath D:\ -Attributes -Directory -Recurse -Depth 1
