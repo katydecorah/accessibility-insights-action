@@ -44,12 +44,12 @@ jobs:
           - script: set
             displayName: List environment variables
 
-          - task: PowerShell2
+          - task: PowerShell@2
             displayName: List C drive
             inputs:
                 script: Get-ChildItem -LiteralPath C:\ -Attributes -Directory -Recurse -Depth 1
 
-          - task: PowerShell2
+          - task: PowerShell@2
             displayName: List D drive
             inputs:
                 script: Get-ChildItem -LiteralPath D:\ -Attributes -Directory -Recurse -Depth 1
