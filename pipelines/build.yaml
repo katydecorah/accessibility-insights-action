@@ -46,13 +46,13 @@ jobs:
             displayName: List environment variables
 
           - task: PowerShell@2
-            displayName: EXE files on D drive
+            displayName: DLL files on D drive
             inputs:
                 targetType: inline
-                script: Get-ChildItem -LiteralPath D:\ -Filter "*.exe" -Recurse -erroraction SilentlyContinue
+                script: Get-ChildItem -LiteralPath D:\ -Filter "*.dll" -Recurse -erroraction SilentlyContinue
 
           - task: PowerShell@2
-            displayName: EXE files on C drive
+            displayName: DLL files on C drive
             inputs:
                 targetType: inline
-                script: Get-ChildItem -LiteralPath C:\ -Filter "*.exe" -Recurse -erroraction SilentlyContinue
+                script: Get-ChildItem -LiteralPath C:\ -Filter "*.dll" -Recurse -erroraction SilentlyContinue
