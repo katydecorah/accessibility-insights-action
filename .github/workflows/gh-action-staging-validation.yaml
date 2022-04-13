@@ -3,10 +3,16 @@
 
 name: gh-action-staging-validation
 
+on:
+    push:
+        branches:
+            - gh-action-staging-validation
+
 jobs:
   build:
-    name: Build & check code styling
+    name: run automated cases from gh-action staging validation
     runs-on: ubuntu-latest
+    steps:
     - name: Setup node
       uses: actions/setup-node@v1
       with:
@@ -16,14 +22,14 @@ jobs:
     - script: npx serve "${{ github.workspace }}/dev/website-root" -l 5858 &
       name: 'Start /dev/website-root test server at http://localhost:5858'
 
-    - name: [should succeed] case 1: siteDir, no baseline
+    - name: '[should succeed] case 1: siteDir, no baseline'
       uses: microsoft/accessibility-insights-action@v2
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         site-dir: ${{ github.workspace }}/dev/website-root
         output-dir: ${{ github.workspace }}/_case-1
         
-    - name: case 1: upload report
+    - name: 'case 1: upload report'
       uses: actions/upload-artifact@v2
       with:
           name: accessibility-reports-case-1
@@ -36,11 +42,8 @@ jobs:
         url: http://localhost:5858
         output-dir: ${{ github.workspace }}/_case-2
         
-    - name: case 2: upload report
+    - name: 'case 2: upload report'
       uses: actions/upload-artifact@v2
       with:
           name: accessibility-reports-case-2
           path: ${{ github.workspace }}/_case-2
-     
-          
-      
