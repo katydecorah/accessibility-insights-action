@@ -12,6 +12,8 @@ jobs:
   build:
     name: run automated cases from gh-action staging validation
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
     steps:
     - name: Setup node
       uses: actions/setup-node@v1
