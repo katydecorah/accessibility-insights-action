@@ -19,7 +19,7 @@ jobs:
         node-version: 12.x
 
     # reused by all "url" cases
-    - script: npx serve "${{ github.workspace }}/dev/website-root" -l 5858 &
+    - run: npx serve "${{ github.workspace }}/dev/website-root" -l 5858 &
       name: 'Start /dev/website-root test server at http://localhost:5858'
 
     - name: '[should succeed] case 1: siteDir, no baseline'
