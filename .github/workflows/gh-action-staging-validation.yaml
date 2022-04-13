@@ -15,17 +15,31 @@ jobs:
     permissions:
       checks: write
     steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
     - name: Setup node
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+  
+    # running against built version until we release to staging
+    # should replace with microsoft/accessibility-insights-action@vX.Y.Z-staging
 
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    
+    - name: Build
+      run: yarn cbuild
+
+    - name: Scan test site
+      uses: ./packages/gh-action/ 
     # reused by all "url" cases
     - run: npx serve "${{ github.workspace }}/dev/website-root" -l 5858 &
       name: 'Start /dev/website-root test server at http://localhost:5858'
 
     - name: '[should succeed] case 1: siteDir, no baseline'
-      uses: microsoft/accessibility-insights-action@v2
+      uses: ./packages/gh-action/ 
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         site-dir: ${{ github.workspace }}/dev/website-root
@@ -38,7 +52,7 @@ jobs:
           path: ${{ github.workspace }}/_case-1
 
     - name: '[should succeed] case 2: url, no baseline'
-      uses: microsoft/accessibility-insights-action@v2
+      uses: ./packages/gh-action/
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         url: http://localhost:5858
@@ -49,3 +63,62 @@ jobs:
       with:
           name: accessibility-reports-case-2
           path: ${{ github.workspace }}/_case-2
+          
+    - name: '[should succeed] case 3: up-to-date baseline'
+      uses: ./packages/gh-action/
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        url: http://localhost:5858
+        output-dir: ${{ github.workspace }}/_case-3
+        baseline-file: '${{ github.workspace }}/dev/website-baselines/up-to-date-5858.baseline'
+        
+    - name: 'case 3: upload report'
+      uses: actions/upload-artifact@v2
+      with:
+          name: accessibility-reports-case-3
+          path: ${{ github.workspace }}/_case-3
+          
+    - name: '[should fail] case 4: baseline missing failures'
+      uses: ./packages/gh-action/
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        url: http://localhost:5858
+        output-dir: ${{ github.workspace }}/_case-4
+        baseline-file: '${{ github.workspace }}/dev/website-baselines/missing-failures-5858.baseline'
+      continue-on-error: true
+    
+    - name: 'case 4: upload report'
+      uses: actions/upload-artifact@v2
+      with:
+          name: accessibility-reports-case-4
+          path: ${{ github.workspace }}/_case-4
+          
+    - name: '[should fail] case 5: baseline with resolved failures'
+      uses: ./packages/gh-action/
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        url: http://localhost:5858
+        output-dir: ${{ github.workspace }}/_case-5
+        baseline-file: '${{ github.workspace }}/dev/website-baselines/with-resolved-failures-5858.baseline'
+      continue-on-error: true
+    
+    - name: 'case 5: upload report'
+      uses: actions/upload-artifact@v2
+      with:
+          name: accessibility-reports-case-5
+          path: ${{ github.workspace }}/_case-5
+
+    - name: '[should fail] case 6: new baseline file'
+      uses: ./packages/gh-action/
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        url: http://localhost:5858
+        output-dir: ${{ github.workspace }}/_case-6
+        baseline-file: '${{ github.workspace }}/dev/website-baselines/doesnt-exist.baseline'
+      continue-on-error: true
+    
+    - name: 'case 6: upload report'
+      uses: actions/upload-artifact@v2
+      with:
+          name: accessibility-reports-case-6
+          path: ${{ github.workspace }}/_case-6
