@@ -32,8 +32,6 @@ jobs:
     - name: Build
       run: yarn cbuild
 
-    - name: Scan test site
-      uses: ./packages/gh-action/ 
     # reused by all "url" cases
     - run: npx serve "${{ github.workspace }}/dev/website-root" -l 5858 &
       name: 'Start /dev/website-root test server at http://localhost:5858'
