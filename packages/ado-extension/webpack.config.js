@@ -13,6 +13,7 @@ module.exports = (env) => {
         devtool: 'cheap-source-map',
         entry: {
             ['index']: path.resolve('./src/index.ts'),
+            ['install-node16']: path.resolve('./src/install-node16.ts'),
         },
         // We special case MPL-licensed dependencies ('axe-core', '@axe-core/puppeteer') because we want to avoid including their source in the same file as non-MPL code.
         externals: ['axe-core', 'accessibility-insights-report', 'accessibility-insights-scan', '@types/react', '@types/react-dom'],
