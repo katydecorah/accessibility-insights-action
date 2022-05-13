@@ -14,7 +14,6 @@ export async function getNode(version: string) {
     console.log(toolPath);
 }
 
-
 async function acquireNode(version: string): Promise<string> {
     const osPlat = 'linux';
     const osArch = 'x64';
@@ -29,10 +28,10 @@ async function acquireNode(version: string): Promise<string> {
 
     console.log(downloadUrl);
     let downloadPath: string;
+    // eslint-disable-next-line no-useless-catch
     try {
         downloadPath = await toolLib.downloadTool(downloadUrl);
-    } 
-    catch (err) {
+    } catch (err) {
         throw err;
     }
 
