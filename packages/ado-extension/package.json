@@ -35,6 +35,7 @@
         "@accessibility-insights-action/shared": "^1.0.0",
         "applicationinsights": "^2.3.3",
         "azure-pipelines-task-lib": "^3.2.0",
+        "azure-pipelines-tool-lib": "^1.3.1",
         "reflect-metadata": "^0.1.13"
     }
 }
