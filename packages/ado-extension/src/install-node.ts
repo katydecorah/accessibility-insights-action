@@ -3,12 +3,14 @@
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
 // import * as path from 'path';
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getNode16() {
     const node16 = '16.15.0';
     console.log(node16);
     return getNode(node16);
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export async function getNode(version: string) {
     const toolPath = await acquireNode(version);
     console.log(toolPath);
@@ -31,13 +33,13 @@ async function acquireNode(version: string): Promise<string> {
     try {
         downloadPath = await toolLib.downloadTool(downloadUrl);
     } catch (err) {
-        throw err;
+        console.log(`Failed download attempt`);
+        downloadPath = '';
     }
 
     console.log(downloadPath);
     return downloadPath;
 
-    // //
     // // Extract
     // //
     // const extPath = await toolLib.extractTar(downloadPath);

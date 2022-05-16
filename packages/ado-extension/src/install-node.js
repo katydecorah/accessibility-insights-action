@@ -128,6 +128,7 @@ exports.getNode = exports.getNode16 = void 0;
 // Licensed under the MIT License.
 var toolLib = require('azure-pipelines-tool-lib/tool');
 // import * as path from 'path';
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function getNode16() {
     return __awaiter(this, void 0, void 0, function () {
         var node16;
@@ -139,6 +140,7 @@ function getNode16() {
     });
 }
 exports.getNode16 = getNode16;
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function getNode(version) {
     return __awaiter(this, void 0, void 0, function () {
         var toolPath;
@@ -180,7 +182,9 @@ function acquireNode(version) {
                     return [3 /*break*/, 4];
                 case 3:
                     err_1 = _a.sent();
-                    throw err_1;
+                    console.log('Failed download attempt');
+                    downloadPath = '';
+                    return [3 /*break*/, 4];
                 case 4:
                     console.log(downloadPath);
                     return [2 /*return*/, downloadPath];
