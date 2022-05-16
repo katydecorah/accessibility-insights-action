@@ -127,7 +127,7 @@ exports.getNode = exports.getNode16 = void 0;
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 var toolLib = require('azure-pipelines-tool-lib/tool');
-// import * as path from 'path';
+var path = require('path');
 /*
 export async function getNode16(): void {
     const node16 = '16.15.0';
@@ -169,7 +169,7 @@ function getNode(version) {
 exports.getNode = getNode;
 function acquireNode(version) {
     return __awaiter(this, void 0, void 0, function () {
-        var osPlat, osArch, fileName, urlFileName, downloadUrl, downloadPath, err_1;
+        var osPlat, osArch, fileName, urlFileName, downloadUrl, downloadPath, err_1, extPath, toolRoot;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -194,10 +194,16 @@ function acquireNode(version) {
                     err_1 = _a.sent();
                     console.log('Failed download attempt');
                     downloadPath = '';
-                    return [3 /*break*/, 4];
+                    throw err_1;
                 case 4:
                     console.log(downloadPath);
-                    return [2 /*return*/, downloadPath];
+                    return [4 /*yield*/, toolLib.extractTar(downloadPath)];
+                case 5:
+                    extPath = _a.sent();
+                    toolRoot = path.join(extPath, fileName);
+                    return [4 /*yield*/, toolLib.cacheDir(toolRoot, 'node', version, osArch)];
+                case 6:
+                    return [2 /*return*/, _a.sent()];
             }
         });
     });

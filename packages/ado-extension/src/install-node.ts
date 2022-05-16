@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
-// import * as path from 'path';
+import * as path from 'path';
 
 /*
 export async function getNode16(): void {
@@ -45,18 +45,19 @@ async function acquireNode(version: string): Promise<string> {
     } catch (err) {
         console.log(`Failed download attempt`);
         downloadPath = '';
+        throw err;
     }
 
     console.log(downloadPath);
-    return downloadPath;
+    //return downloadPath;
 
     // // Extract
     // //
-    // const extPath = await toolLib.extractTar(downloadPath);
+    const extPath = await toolLib.extractTar(downloadPath);
 
     // //
     // // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded
     // //
-    // const toolRoot = path.join(extPath, fileName);
-    // return await toolLib.cacheDir(toolRoot, 'node', version, osArch);
+    const toolRoot = path.join(extPath, fileName);
+    return await toolLib.cacheDir(toolRoot, 'node', version, osArch);
 }
