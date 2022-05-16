@@ -128,15 +128,25 @@ exports.getNode = exports.getNode16 = void 0;
 // Licensed under the MIT License.
 var toolLib = require('azure-pipelines-tool-lib/tool');
 // import * as path from 'path';
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+/*
+export async function getNode16(): void {
+    const node16 = '16.15.0';
+    console.log(node16);
+    return getNode(node16);
+}*/
 function getNode16() {
-    return __awaiter(this, void 0, void 0, function () {
-        var node16;
-        return __generator(this, function (_a) {
-            node16 = '16.15.0';
-            console.log(node16);
-            return [2 /*return*/, getNode(node16)];
+    var _this = this;
+    (function () {
+        return __awaiter(_this, void 0, void 0, function () {
+            var node16;
+            return __generator(this, function (_a) {
+                node16 = '16.15.0';
+                console.log(node16);
+                return [2 /*return*/, getNode(node16)];
+            });
         });
+    })()['catch'](function (error) {
+        console.log('##[error][Exception] Exception thrown in extension: ', error);
     });
 }
 exports.getNode16 = getNode16;
