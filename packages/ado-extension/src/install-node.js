@@ -136,6 +136,7 @@ export async function getNode16(): void {
 }*/
 function getNode16() {
     var _this = this;
+    // eslint-disable-next-line @typescript-eslint/require-await
     (function () {
         return __awaiter(_this, void 0, void 0, function () {
             var node16;
@@ -150,20 +151,24 @@ function getNode16() {
     });
 }
 exports.getNode16 = getNode16;
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 function getNode(version) {
-    return __awaiter(this, void 0, void 0, function () {
-        var toolPath;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0:
-                    return [4 /*yield*/, acquireNode(version)];
-                case 1:
-                    toolPath = _a.sent();
-                    console.log(toolPath);
-                    return [2 /*return*/];
-            }
+    var _this = this;
+    (function () {
+        return __awaiter(_this, void 0, void 0, function () {
+            var toolPath;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        return [4 /*yield*/, acquireNode(version)];
+                    case 1:
+                        toolPath = _a.sent();
+                        console.log(toolPath);
+                        return [2 /*return*/];
+                }
+            });
         });
+    })()['catch'](function (error) {
+        console.log('##[error][Exception] Exception thrown in extension: ', error);
     });
 }
 exports.getNode = getNode;

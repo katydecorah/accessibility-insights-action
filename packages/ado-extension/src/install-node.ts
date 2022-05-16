@@ -11,6 +11,7 @@ export async function getNode16(): void {
 }*/
 
 export function getNode16(): void {
+    // eslint-disable-next-line @typescript-eslint/require-await
     (async () => {
         const node16 = '16.15.0';
         console.log(node16);
@@ -20,10 +21,13 @@ export function getNode16(): void {
     });
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export async function getNode(version: string) {
-    const toolPath = await acquireNode(version);
-    console.log(toolPath);
+export function getNode(version: string): void {
+    (async () => {
+        const toolPath = await acquireNode(version);
+        console.log(toolPath);
+    })().catch((error) => {
+        console.log('##[error][Exception] Exception thrown in extension: ', error);
+    });
 }
 
 async function acquireNode(version: string): Promise<string> {
