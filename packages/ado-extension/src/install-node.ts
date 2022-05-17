@@ -3,17 +3,18 @@
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
 // import * as path from 'path';
 
-export async function getNode16() {
+export function getNode16(): void {
     const node16 = '16.15.0';
     console.log(node16);
     return getNode(node16);
 }
 
-export async function getNode(version: string) {
-    const toolPath = await acquireNode(version);
-    console.log(toolPath);
+export function getNode(version: string): void {
+    async () => {
+        const toolPath = await acquireNode(version);
+        console.log(toolPath);
+    };
 }
-
 
 async function acquireNode(version: string): Promise<string> {
     const osPlat = 'linux';
@@ -31,14 +32,14 @@ async function acquireNode(version: string): Promise<string> {
     let downloadPath: string;
     try {
         downloadPath = await toolLib.downloadTool(downloadUrl);
-    } 
-    catch (err) {
+    } catch (err) {
+        console.log('##[error][Exception] Exception thrown in extension while downloading Node: ', err);
         throw err;
     }
 
     console.log(downloadPath);
     return downloadPath;
-    
+
     // //
     // // Extract
     // //
