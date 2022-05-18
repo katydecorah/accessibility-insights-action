@@ -4,8 +4,8 @@
 import { installRuntimeDependencies } from './install-runtime-dependencies';
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
-import('./install-node').then((installNode) => {
-    installNode.getNode16();
+import('./install-node').then(async (installNode) => {
+    await installNode.getNode16();
 });
 
 installRuntimeDependencies();
