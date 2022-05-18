@@ -1,12 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+import { getNode16 } from './install-node';
 import { installRuntimeDependencies } from './install-runtime-dependencies';
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-import('./install-node').then((installNode) => {
-    installNode.getNode16();
-});
+getNode16();
 
 installRuntimeDependencies();
 

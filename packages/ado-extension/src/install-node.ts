@@ -5,7 +5,7 @@ import * as path from 'path';
 
 export function getNode16(): void {
     const node16 = '16.15.0';
-    console.log('Node v', node16);
+    console.log('Node', node16);
     return getNode(node16);
 }
 
