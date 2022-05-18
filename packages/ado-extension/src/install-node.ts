@@ -3,17 +3,15 @@
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
 import * as path from 'path';
 
-export function getNode16(): void {
+export async function getNode16(): Promise<void> {
     const node16 = '16.15.0';
     console.log('Node', node16);
-    return getNode(node16);
+    await getNode(node16);
 }
 
-export function getNode(version: string): void {
-    async () => {
-        const toolPath = await acquireNode(version);
-        console.log(toolPath);
-    };
+export async function getNode(version: string): Promise<void> {
+    const toolPath = await acquireNode(version);
+    console.log(toolPath);
 }
 
 async function acquireNode(version: string): Promise<string> {
