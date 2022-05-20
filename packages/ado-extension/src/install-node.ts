@@ -3,24 +3,20 @@
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
 import * as path from 'path';
 
-export async function getNode16(): Promise<void> {
-    const node16 = '16.15.0';
-    console.log('Node', node16);
-    await getNode(node16);
-}
-
-export async function getNode(version: string): Promise<void> {
-    const toolPath = await acquireNode(version);
-    console.log(toolPath);
-}
-
-async function acquireNode(version: string): Promise<string> {
+export async function acquireNode(version: string): Promise<string> {
     const osPlat = 'linux';
     const osArch = 'x64';
+
+    version = toolLib.cleanVersion(version);
+
+    const cachedPath = toolLib.findLocalTool('node', version, osArch);
+    if (cachedPath) {
+        return cachedPath;
+    }
+
     //
     // Download - a tool installer intimately knows how to get the tool (and construct urls)
     //
-    version = toolLib.cleanVersion(version);
     const fileName: string = 'node-v' + version + '-' + osPlat + '-' + osArch;
     const urlFileName: string = fileName + '.tar.gz';
 

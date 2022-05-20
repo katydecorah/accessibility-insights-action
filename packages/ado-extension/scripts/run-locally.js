@@ -28,7 +28,7 @@ const fs = require('fs');
 const path = require('path');
 const { exit } = require('process');
 
-const taskExecutablePath = path.join(__dirname, '..', 'dist', 'pkg', 'index.js');
+const taskExecutablePath = path.join(__dirname, '..', 'dist', 'pkg', 'wrapper.js');
 const tmr = new mockRunner.TaskMockRunner(taskExecutablePath);
 
 const taskConfigPath = path.join(__dirname, '..', 'dist', 'pkg', 'task.json');
@@ -67,9 +67,10 @@ fs.copyFileSync(srcAdoExtensionMetadata, destAdoExtensionMetadata);
 
 const tempPath = path.join(__dirname, '..', 'dist', 'tmp');
 
-if (!fs.existsSync(tempPath)) {
-    fs.mkdirSync(tempPath);
+if (fs.existsSync(tempPath)) {
+    fs.rmdirSync(tempPath, { recursive: true });
 }
+fs.mkdirSync(tempPath);
 process.env['AGENT_TEMPDIRECTORY'] = tempPath;
 
 console.log('beginning task execution below');
