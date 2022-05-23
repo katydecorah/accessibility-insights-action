@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+import * as taskLib from 'azure-pipelines-task-lib/task';
 import * as toolLib from 'azure-pipelines-tool-lib/tool';
 import * as path from 'path';
+import * as os from 'os';
 
 export async function acquireNode(version: string): Promise<string> {
-    const osPlat = 'linux';
-    const osArch = 'x64';
+    const osPlat: string = os.platform();
+    const osArch: string = (os.arch() === 'ia32') ? 'x86' : os.arch();
 
     version = toolLib.cleanVersion(version);
 
@@ -17,12 +19,13 @@ export async function acquireNode(version: string): Promise<string> {
     //
     // Download - a tool installer intimately knows how to get the tool (and construct urls)
     //
-    const fileName: string = 'node-v' + version + '-' + osPlat + '-' + osArch;
-    const urlFileName: string = fileName + '.tar.gz';
+    const fileName: string = osPlat === 'win32' ? 'node-v' + version + '-win-' + osArch :
+                                                  'node-v' + version + '-' + osPlat + '-' + osArch;
+    const urlFileName: string = osPlat === 'win32' ? fileName + '.7z':
+                                                     fileName + '.tar.gz';
 
     const downloadUrl = 'https://nodejs.org/dist/v' + version + '/' + urlFileName;
 
-    console.log(downloadUrl);
     let downloadPath: string;
     try {
         downloadPath = await toolLib.downloadTool(downloadUrl);
@@ -31,12 +34,22 @@ export async function acquireNode(version: string): Promise<string> {
         throw err;
     }
 
-    console.log(downloadPath);
-
     //
     // Extract
     //
-    const extPath = await toolLib.extractTar(downloadPath);
+    let extPath;
+    if (osPlat === 'win32') {
+        extPath = taskLib.getVariable('Agent.TempDirectory');
+        if (!extPath) {
+            throw new Error('Expected Agent.TempDirectory to be set');
+        }
+
+        const _7zPath = path.join(__dirname, '7zr.exe');
+        extPath = await toolLib.extract7z(downloadPath, extPath, _7zPath);
+    }
+    else {
+        extPath = await toolLib.extractTar(downloadPath);
+    }
 
     //
     // Install into the local tool cache - node extracts with a root folder that matches the fileName downloaded

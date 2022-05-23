@@ -14,18 +14,19 @@ async function wrapper() {
 
     const nodeVersion = '16.15.0';
     const nodePath = await acquireNode(nodeVersion);
+    console.log('nodePath', nodePath);
 
-    const npmPath = /* infer this from nodePath somehow */;
-    execFileSync(npmPath, ['install', '--global', 'yarn'], {
-        stdio: 'inherit',
-        cwd: __dirname,
-    });
+    // const npmPath = /* infer this from nodePath somehow */;
+    // execFileSync(npmPath, ['install', '--global', 'yarn'], {
+    //     stdio: 'inherit',
+    //     cwd: __dirname,
+    // });
 
-    const yarnPath = /* infer this from nodePath somehow */;
-    execFileSync(yarnPath, ['install', '--prod', '--frozen-lockfile'], {
-        stdio: 'inherit',
-        cwd: __dirname,
-    });
+    // const yarnPath = /* infer this from nodePath somehow */;
+    // execFileSync(yarnPath, ['install', '--prod', '--frozen-lockfile'], {
+    //     stdio: 'inherit',
+    //     cwd: __dirname,
+    // });
 
     console.log('##[endgroup]');
 
