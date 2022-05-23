@@ -42,21 +42,13 @@ const commonConfig = {
         // The azure-pipelines-*-lib libraries use dynamic require() statements to import package.json and lib.json
         // data files at runtime. These ContextReplacementPlugins tell Webpack in advance exactly which .json files
         // need to be bundled and set up for dynamic require() support.
-        new webpack.ContextReplacementPlugin(
-            /azure-pipelines-task-lib/,
-            require.resolve('azure-pipelines-task-lib'),
-            {
-                '..\\..\\node_modules\\azure-pipelines-task-lib\\lib.json': 'azure-pipelines-task-lib/lib.json',
-                '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
-            }
-        ),
-        new webpack.ContextReplacementPlugin(
-            /azure-pipelines-tool-lib/,
-            require.resolve('azure-pipelines-tool-lib'),
-            {
-                '..\\..\\node_modules\\azure-pipelines-tool-lib\\package.json': 'azure-pipelines-tool-lib/package.json',
-            }
-        ),
+        new webpack.ContextReplacementPlugin(/azure-pipelines-task-lib/, require.resolve('azure-pipelines-task-lib'), {
+            '..\\..\\node_modules\\azure-pipelines-task-lib\\lib.json': 'azure-pipelines-task-lib/lib.json',
+            '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
+        }),
+        new webpack.ContextReplacementPlugin(/azure-pipelines-tool-lib/, require.resolve('azure-pipelines-tool-lib'), {
+            '..\\..\\node_modules\\azure-pipelines-tool-lib\\package.json': 'azure-pipelines-tool-lib/package.json',
+        }),
     ],
     resolve: {
         extensions: ['.ts', '.js', '.json'],
@@ -74,7 +66,7 @@ const mainConfig = {
         __dirname: false,
     },
     target: 'node16',
-}
+};
 
 const wrapperConfig = {
     ...commonConfig,
@@ -86,6 +78,6 @@ const wrapperConfig = {
         __dirname: true,
     },
     target: 'node10',
-}
+};
 
-module.exports = [mainConfig, wrapperConfig]
+module.exports = [mainConfig, wrapperConfig];

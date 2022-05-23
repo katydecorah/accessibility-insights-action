@@ -7,7 +7,7 @@ import * as os from 'os';
 
 export async function acquireNode(version: string): Promise<string> {
     const osPlat: string = os.platform();
-    const osArch: string = (os.arch() === 'ia32') ? 'x86' : os.arch();
+    const osArch: string = os.arch() === 'ia32' ? 'x86' : os.arch();
 
     version = toolLib.cleanVersion(version);
 
@@ -19,10 +19,8 @@ export async function acquireNode(version: string): Promise<string> {
     //
     // Download - a tool installer intimately knows how to get the tool (and construct urls)
     //
-    const fileName: string = osPlat === 'win32' ? 'node-v' + version + '-win-' + osArch :
-                                                  'node-v' + version + '-' + osPlat + '-' + osArch;
-    const urlFileName: string = osPlat === 'win32' ? fileName + '.7z':
-                                                     fileName + '.tar.gz';
+    const fileName: string = osPlat === 'win32' ? 'node-v' + version + '-win-' + osArch : 'node-v' + version + '-' + osPlat + '-' + osArch;
+    const urlFileName: string = osPlat === 'win32' ? fileName + '.7z' : fileName + '.tar.gz';
 
     const downloadUrl = 'https://nodejs.org/dist/v' + version + '/' + urlFileName;
 
@@ -46,8 +44,7 @@ export async function acquireNode(version: string): Promise<string> {
 
         const _7zPath = path.join(__dirname, '7zr.exe');
         extPath = await toolLib.extract7z(downloadPath, extPath, _7zPath);
-    }
-    else {
+    } else {
         extPath = await toolLib.extractTar(downloadPath);
     }
 

@@ -32,9 +32,7 @@ async function wrapper() {
 
     const mainPath = path.join(__dirname, 'main.js');
 
-    execFileSync(nodePath, [
-        mainPath
-    ], {
+    execFileSync(nodePath, [mainPath], {
         stdio: 'inherit',
         env: process.env,
     });

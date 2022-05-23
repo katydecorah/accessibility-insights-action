@@ -6,7 +6,7 @@ const packageJson = require(process.cwd() + '/package.json');
 const webpackConfig = require(process.cwd() + '/webpack.config');
 const { buildRuntimePackageMetadata } = require('../shared/build-runtime-package-metadata');
 
-const mainWebpackConfig = webpackConfig.filter(c => c.name === 'main')[0];
+const mainWebpackConfig = webpackConfig.filter((c) => c.name === 'main')[0];
 
 // We allow overrides of extension/task identifiers so we can deploy
 // different versions of the extension with the same YAML
