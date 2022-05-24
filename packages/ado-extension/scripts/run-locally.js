@@ -66,12 +66,14 @@ console.log(`run-locally.js is copying ${srcAdoExtensionMetadata} to ${destAdoEx
 fs.copyFileSync(srcAdoExtensionMetadata, destAdoExtensionMetadata);
 
 const tempPath = path.join(__dirname, '..', 'dist', 'tmp');
+const toolsDirectory = path.join(__dirname, '..', 'dist', 'tools');
 
 if (fs.existsSync(tempPath)) {
     fs.rmdirSync(tempPath, { recursive: true });
 }
 fs.mkdirSync(tempPath);
 process.env['AGENT_TEMPDIRECTORY'] = tempPath;
+process.env['AGENT_TOOLSDIRECTORY'] = toolsDirectory;
 
 console.log('beginning task execution below');
 console.log();

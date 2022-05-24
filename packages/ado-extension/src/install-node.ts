@@ -20,7 +20,7 @@ export async function acquireNode(version: string): Promise<string> {
     // Download - a tool installer intimately knows how to get the tool (and construct urls)
     //
     const fileName: string = osPlat === 'win32' ? 'node-v' + version + '-win-' + osArch : 'node-v' + version + '-' + osPlat + '-' + osArch;
-    const urlFileName: string = osPlat === 'win32' ? fileName + '.7z' : fileName + '.tar.gz';
+    const urlFileName: string = osPlat === 'win32' ? fileName + '.zip' : fileName + '.tar.gz';
 
     const downloadUrl = 'https://nodejs.org/dist/v' + version + '/' + urlFileName;
 
@@ -42,8 +42,9 @@ export async function acquireNode(version: string): Promise<string> {
             throw new Error('Expected Agent.TempDirectory to be set');
         }
 
-        const _7zPath = path.join(__dirname, '7zr.exe');
-        extPath = await toolLib.extract7z(downloadPath, extPath, _7zPath);
+        // const _7zPath = path.join(__dirname, '7zr.exe');
+        // extPath = await toolLib.extract7z(downloadPath, extPath, _7zPath);
+        extPath = await toolLib.extractZip(downloadPath, extPath);
     } else {
         extPath = await toolLib.extractTar(downloadPath);
     }

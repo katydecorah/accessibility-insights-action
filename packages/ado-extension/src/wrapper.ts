@@ -13,25 +13,27 @@ async function wrapper() {
     console.log('##[group]Installing runtime dependencies');
 
     const nodeVersion = '16.15.0';
-    const nodePath = await acquireNode(nodeVersion);
-    console.log('nodePath', nodePath);
+    const nodeDirPath = await acquireNode(nodeVersion);
+    console.log('nodePath', nodeDirPath);
 
-    // const npmPath = /* infer this from nodePath somehow */;
-    // execFileSync(npmPath, ['install', '--global', 'yarn'], {
-    //     stdio: 'inherit',
-    //     cwd: __dirname,
-    // });
+    const npmPath = path.join(nodeDirPath, 'npm.cmd');
+    execFileSync(npmPath, ['install', '--global', 'yarn'], {
+        stdio: 'inherit',
+        cwd: __dirname,
+    });
 
-    // const yarnPath = /* infer this from nodePath somehow */;
-    // execFileSync(yarnPath, ['install', '--prod', '--frozen-lockfile'], {
-    //     stdio: 'inherit',
-    //     cwd: __dirname,
-    // });
+    const yarnPath = path.join(nodeDirPath, 'yarn.cmd');
+    execFileSync(yarnPath, ['install', '--prod', '--frozen-lockfile'], {
+        stdio: 'inherit',
+        cwd: __dirname,
+    });
 
     console.log('##[endgroup]');
 
-    const mainPath = path.join(__dirname, 'main.js');
+    console.log('dirname', __dirname); // why is this not /dist/pkg?
+    const mainPath = path.join(__dirname, '../dist/pkg/main.js');
 
+    const nodePath = path.join(nodeDirPath, 'node.exe');
     execFileSync(nodePath, [mainPath], {
         stdio: 'inherit',
         env: process.env,
