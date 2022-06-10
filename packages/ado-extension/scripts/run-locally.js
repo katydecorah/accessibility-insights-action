@@ -69,7 +69,7 @@ const tempPath = path.join(__dirname, '..', 'dist', 'tmp');
 const toolsDirectory = path.join(__dirname, '..', 'dist', 'tools');
 
 if (fs.existsSync(tempPath)) {
-    fs.rmdirSync(tempPath, { recursive: true });
+    fs.rmdirSync(tempPath, { recursive: true, force: true });
 }
 fs.mkdirSync(tempPath);
 process.env['AGENT_TEMPDIRECTORY'] = tempPath;
