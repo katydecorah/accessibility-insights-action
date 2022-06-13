@@ -7,7 +7,7 @@ trigger: # trigger only affects CI builds
             - main
 
 variables:
-    linuxImage: 'ubuntu-18.04'
+    linuxImage: 'ubuntu-20.04'
     windowsImage: 'windows-2019'
 
 jobs:
@@ -18,8 +18,8 @@ jobs:
       steps:
           - task: NodeTool@0
             inputs:
-                versionSpec: '12.x'
-            displayName: use node 12.x
+                versionSpec: '16.x'
+            displayName: use node 16.x
 
           - script: yarn install --frozen-lockfile
             displayName: Install dependencies
@@ -105,8 +105,8 @@ jobs:
       steps:
           - task: NodeTool@0
             inputs:
-                versionSpec: '12.x'
-            displayName: use node 12.x
+                versionSpec: '16.x'
+            displayName: use node 16.x
 
           - script: yarn install --frozen-lockfile
             displayName: Install dependencies
