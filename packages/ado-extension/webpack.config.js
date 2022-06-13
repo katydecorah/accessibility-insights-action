@@ -44,9 +44,11 @@ const commonConfig = {
         // need to be bundled and set up for dynamic require() support.
         new webpack.ContextReplacementPlugin(/azure-pipelines-task-lib/, require.resolve('azure-pipelines-task-lib'), {
             '..\\..\\node_modules\\azure-pipelines-task-lib\\lib.json': 'azure-pipelines-task-lib/lib.json',
-            '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
             '../../node_modules/azure-pipelines-task-lib/lib.json': 'azure-pipelines-task-lib/lib.json',
+            '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
             '../../node_modules/azure-pipelines-tool-lib/lib.json': 'azure-pipelines-tool-lib/lib.json',
+            '..\\..\\node_modules\\azure-pipelines-tool-lib\\node_modules\\azure-pipelines-task-lib\\lib.json':
+                'azure-pipelines-task-lib/lib.json',
             '../../node_modules/azure-pipelines-tool-lib/node_modules/azure-pipelines-task-lib/lib.json':
                 'azure-pipelines-task-lib/lib.json',
         }),
