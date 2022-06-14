@@ -4,51 +4,51 @@
 name: 'Accessibility Insights Action'
 description: 'Task to scan for accessibility issues'
 inputs:
-    output-dir:
+    outputDir:
         description: 'Folder containing the scan report.'
         default: '_accessibility-reports'
         required: true
-    site-dir:
+    staticSiteDir:
         description: 'Folder containing website content.'
         default: ${{ github.workspace }}
         required: true
-    scan-url-relative-path:
+    staticSiteUrlRelativePath:
         description: 'Relative path to directory used to construct base scan url. e.g. / on Ubuntu and // on Windows'
         required: true
         default: '/'
-    chrome-path:
+    chromePath:
         description: 'Path to Chrome executable.'
         required: false
-    repo-token:
+    repoToken:
         description: 'GitHub API access token.'
         required: true
     url:
         description: 'The hosted URL to scan/crawl for accessibility issues.'
         required: false
-    max-urls:
+    maxUrls:
         description: 'Maximum number of pages opened by crawler. The crawl will stop when this limit is reached.'
         required: false
         default: '100'
-    discovery-patterns:
+    discoveryPatterns:
         description: 'List of RegEx patterns to crawl in addition to the provided URL, separated by space.'
         required: false
-    input-file:
+    inputFile:
         description: 'File path that contains list of URLs (each separated by a new line) to scan in addition to URLs discovered from crawling the provided URL.'
         required: false
-    input-urls:
+    inputUrls:
         description: 'List of URLs to crawl in addition to URLs discovered from crawling the provided URL, separated by space.'
         required: false
-    localhost-port:
+    staticSitePort:
         description: 'The preferred local website TCP port to use when scanning local website content.'
         required: false
-    scan-timeout:
+    scanTimeout:
         description: 'The maximum timeout in milliseconds for the scan (excluding dependency setup)'
         required: false
         default: 90000
-    baseline-file:
+    baselineFile:
         description: 'The old baseline file path, a new baseline will be generated with the same name, if null baseline option will be disabled.'
         required: false
-    single-worker:
+    singleWorker:
         description: 'To get deterministic scanning results, either specify the singleWorker parameter or ensure that the value specified for the maxUrls parameter is larger than the total number of urls in the web site being scanned.'
         required: true
         default: true
@@ -76,15 +76,15 @@ runs:
               node $GITHUB_ACTION_PATH/dist/index.js
           shell: bash
           env:
-              INPUT_OUTPUT-DIR: ${{ inputs.output-dir }}
-              INPUT_SITE-DIR: ${{ inputs.site-dir }}
-              INPUT_SCAN-URL-RELATIVE-PATH: ${{ inputs.scan-url-relative-path }}
-              INPUT_CHROME-PATH: ${{ inputs.chrome-path }}
-              INPUT_REPO-TOKEN: ${{ inputs.repo-token }}
+              INPUT_OUTPUT-DIR: ${{ inputs.outputDir }}
+              INPUT_STATIC-SITE-DIR: ${{ inputs.staticSiteDir }}
+              INPUT_STATIC-SITE-URL-RELATIVE-PATH: ${{ inputs.staticSiteUrlRelativePath }}
+              INPUT_CHROME-PATH: ${{ inputs.chromePath }}
+              INPUT_REPO-TOKEN: ${{ inputs.repoToken }}
               INPUT_URL: ${{ inputs.url }}
-              INPUT_MAX-URLS: ${{ inputs.max-urls }}
-              INPUT_DISCOVERY-PATTERNS: ${{ inputs.discovery-patterns }}
-              INPUT_INPUT-FILE: ${{ inputs.input-file }}
-              INPUT_INPUT-URLS: ${{ inputs.input-urls }}
-              INPUT_LOCALHOST-PORT: ${{ inputs.localhost-port }}
-              INPUT_SCAN-TIMEOUT: ${{ inputs.scan-timeout }}
+              INPUT_MAX-URLS: ${{ inputs.maxUrls }}
+              INPUT_DISCOVERY-PATTERNS: ${{ inputs.discoveryPatterns }}
+              INPUT_INPUT-FILE: ${{ inputs.inputFile }}
+              INPUT_INPUT-URLS: ${{ inputs.inputUrls }}
+              INPUT_STATIC-SITE-PORT: ${{ inputs.staticSitePort }}
+              INPUT_SCAN-TIMEOUT: ${{ inputs.scanTimeout }}
