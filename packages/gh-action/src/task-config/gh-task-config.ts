@@ -20,24 +20,24 @@ export class GHTaskConfig extends TaskConfig {
 
     public getReportOutDir(): string {
         // Relying on action.yml to make this required
-        return this.getOptionalPathInput('output-dir');
+        return this.getOptionalPathInput('outputDir');
     }
 
     public getStaticSiteDir(): string | undefined {
-        return this.getOptionalPathInput('site-dir');
+        return this.getOptionalPathInput('staticSiteDir');
     }
 
     public getStaticSiteUrlRelativePath(): string | undefined {
-        return this.getOptionalStringInput('scan-url-relative-path');
+        return this.getOptionalStringInput('staticSiteUrlRelativePath');
     }
 
     public getToken(): string {
         // Relying on action.yml to make this required
-        return this.getOptionalStringInput('repo-token');
+        return this.getOptionalStringInput('repoToken');
     }
 
     public getChromePath(): string | undefined {
-        return this.getOptionalPathInput('chrome-path') ?? this.processObj.env.CHROME_BIN;
+        return this.getOptionalPathInput('chromePath') ?? this.processObj.env.CHROME_BIN;
     }
 
     public getUrl(): string | undefined {
@@ -46,28 +46,28 @@ export class GHTaskConfig extends TaskConfig {
 
     public getMaxUrls(): number {
         // Relying on action.yml to provide a default if necessary
-        return this.getOptionalIntInput('max-urls');
+        return this.getOptionalIntInput('maxUrls');
     }
 
     public getDiscoveryPatterns(): string | undefined {
-        return this.getOptionalStringInput('discovery-patterns');
+        return this.getOptionalStringInput('discoveryPatterns');
     }
 
     public getInputFile(): string | undefined {
-        return this.getOptionalPathInput('input-file');
+        return this.getOptionalPathInput('inputFile');
     }
 
     public getInputUrls(): string | undefined {
-        return this.getOptionalStringInput('input-urls');
+        return this.getOptionalStringInput('inputUrls');
     }
 
     public getScanTimeout(): number {
         // Relying on action.yml to provide a default if necessary
-        return this.getOptionalIntInput('scan-timeout');
+        return this.getOptionalIntInput('scanTimeout');
     }
 
     public getStaticSitePort(): number | undefined {
-        return this.getOptionalIntInput('localhost-port');
+        return this.getOptionalIntInput('staticSitePort');
     }
 
     public getRunId(): number {
@@ -75,12 +75,12 @@ export class GHTaskConfig extends TaskConfig {
     }
 
     public getSingleWorker(): boolean {
-        const value = this.actionCoreObj.getInput('single-worker');
+        const value = this.actionCoreObj.getInput('singleWorker');
         return isEmpty(value) || value.toLowerCase().trim() !== 'false' ? true : false;
     }
 
     public getBaselineFile(): string | undefined {
-        return this.getOptionalPathInput('baseline-file');
+        return this.getOptionalPathInput('baselineFile');
     }
 
     public getHostingMode(): string | undefined {
@@ -90,10 +90,10 @@ export class GHTaskConfig extends TaskConfig {
     public getInputName(key: TaskInputKey): string {
         const keyToName = {
             HostingMode: 'hosting-mode',
-            StaticSiteDir: 'site-dir',
-            StaticSiteUrlRelativePath: 'scan-url-relative-path',
+            StaticSiteDir: 'staticSiteDir',
+            StaticSiteUrlRelativePath: 'staticSiteUrlRelativePath',
             Url: 'url',
-            StaticSitePort: 'localhost-port',
+            StaticSitePort: 'staticSitePort',
         };
         return keyToName[key];
     }
