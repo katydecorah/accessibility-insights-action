@@ -9,7 +9,15 @@ const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const commonConfig = {
     devtool: 'cheap-source-map',
     // We special case MPL-licensed dependencies ('axe-core', '@axe-core/puppeteer') because we want to avoid including their source in the same file as non-MPL code.
-    externals: ['axe-core', 'accessibility-insights-report', 'accessibility-insights-scan', '@types/react', '@types/react-dom'],
+    externals: [
+        'axe-core',
+        'accessibility-insights-report',
+        'accessibility-insights-scan',
+        '@types/react',
+        '@types/react-dom',
+        'azure-pipelines-task-lib',
+        'azure-pipelines-tool-lib',
+    ],
     mode: 'development',
     module: {
         rules: [
