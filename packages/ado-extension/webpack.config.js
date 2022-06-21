@@ -55,8 +55,6 @@ const commonConfig = {
         new webpack.ContextReplacementPlugin(/azure-pipelines-tool-lib/, require.resolve('azure-pipelines-tool-lib'), {
             '..\\..\\node_modules\\azure-pipelines-tool-lib\\package.json': 'azure-pipelines-tool-lib/package.json',
             '../../node_modules/azure-pipelines-tool-lib/package.json': 'azure-pipelines-tool-lib/package.json',
-            '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
-            '../../node_modules/azure-pipelines-tool-lib/lib.json': 'azure-pipelines-tool-lib/lib.json',
         }),
     ],
     resolve: {

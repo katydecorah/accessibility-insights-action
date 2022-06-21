@@ -126,6 +126,12 @@ jobs:
                 outputformat: html
 
           - task: CopyFiles@2
+            displayName: 'Copy Packages to: ado-drop'
+            inputs:
+                Contents: |
+                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-task-lib
+
+          - task: CopyFiles@2
             displayName: 'Copy Files to: gh-drop'
             inputs:
                 Contents: |
