@@ -129,8 +129,8 @@ jobs:
             displayName: 'Copy Packages to: ado-drop'
             inputs:
                 Contents: |
-                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-task-lib
-                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-tool-lib
+                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-task-lib/*
+                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-tool-lib/*
 
                 TargetFolder: '$(System.DefaultWorkingDirectory)/packages/ado-extension/dist/node_modules'
 
