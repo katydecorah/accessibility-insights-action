@@ -130,6 +130,9 @@ jobs:
             inputs:
                 Contents: |
                     $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-task-lib
+                    $(System.DefaultWorkingDirectory)/node_modules/azure-pipelines-tool-lib
+
+                TargetFolder: '$(System.DefaultWorkingDirectory)/packages/ado-extension/dist/node_modules'
 
           - task: CopyFiles@2
             displayName: 'Copy Files to: gh-drop'
