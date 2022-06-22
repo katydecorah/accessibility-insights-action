@@ -50,7 +50,7 @@ const commonConfig = {
         // The azure-pipelines-*-lib libraries use dynamic require() statements to import package.json and lib.json
         // data files at runtime. These ContextReplacementPlugins tell Webpack in advance exactly which .json files
         // need to be bundled and set up for dynamic require() support.
-        new webpack.ContextReplacementPlugin(/azure-pipelines-task-lib/, './node_modules/azure-pipelines-task-lib'), {
+        new webpack.ContextReplacementPlugin(/azure-pipelines-task-lib/, './node_modules/azure-pipelines-task-lib', {
             '..\\..\\node_modules\\azure-pipelines-task-lib\\lib.json': 'azure-pipelines-task-lib/lib.json',
             '../../node_modules/azure-pipelines-task-lib/lib.json': 'azure-pipelines-task-lib/lib.json',
             '..\\..\\node_modules\\azure-pipelines-tool-lib\\lib.json': 'azure-pipelines-tool-lib/lib.json',
