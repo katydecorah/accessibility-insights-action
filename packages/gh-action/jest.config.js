@@ -6,4 +6,5 @@ const package = require('./package');
 module.exports = {
     ...baseConfig,
     displayName: package.name,
+    setupFilesAfterEnv: ['jest-extended', `<rootDir>/src/jest-setup.ts`],
 };

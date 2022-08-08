@@ -27,8 +27,10 @@ module.exports = {
     reporters: ['default', ['jest-junit', { outputDirectory: '<rootDir>/test-results/unit', outputName: 'junit.xml' }]],
     setupFilesAfterEnv: ['jest-extended'],
     transform: {
-        '^.+\\.(ts|tsx)$': 'ts-jest',
+        '^.+\\.(ts|tsx)?$': 'ts-jest',
+        '^.+\\.(js|jsx)$': 'babel-jest',
     },
+    transformIgnorePatterns: ['/node_modules/(?!(serialize-error|get-port))'],
     testMatch: ['**/*.spec.[tj]s'],
     testPathIgnorePatterns: ['/dist/', '/out/'],
     verbose: true,
